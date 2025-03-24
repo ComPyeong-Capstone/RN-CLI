@@ -16,6 +16,7 @@ const { width } = Dimensions.get('window');
 const IMAGE_WIDTH = width * 0.7; // 살짝 보이도록 크기 줄이기
 const IMAGE_HEIGHT = IMAGE_WIDTH * (16 / 9); // 16:9 비율 적용
 import { COLORS } from '../../styles/colors'; // 🎨 색상 파일 가져오기
+import CommonButton from '../../styles/Button'; // 경로는 맞게 조정!
 
 const PhotoPromptScreen = ({ navigation }) => {
   const [images, setImages] = useState([
@@ -80,17 +81,21 @@ const [prompt, setPrompt] = useState('');
   />
 
       {/* ✅ 버튼 컨트롤 */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>이전</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('FinalVideoScreen')}
-        >
-          <Text style={styles.buttonText}>영상 생성</Text>
-        </TouchableOpacity>
-      </View>
+ <View style={styles.buttonContainer}>
+   <CommonButton
+     title="이전"
+     onPress={() => navigation.goBack()}
+     type="secondary"
+     style={{ marginHorizontal: 8 }}
+   />
+   <CommonButton
+     title="영상 생성"
+     onPress={() => navigation.navigate('FinalVideoScreen')}
+     type="primary"
+     style={{ marginHorizontal: 8 }}
+   />
+ </View>
+
     </SafeAreaView>
   );
 };
@@ -136,6 +141,7 @@ addButtonText: {
   color: '#00A6FB',
   fontWeight: 'bold',
 },
+
 promptInput: {
   width: width * 0.8,
   height: 40,
@@ -151,16 +157,8 @@ promptInput: {
   buttonContainer: {
     flexDirection: 'row',
     marginTop: 80,
+      gap: 90, // ✅ 버튼 사이 여백
+
   },
-  button: {
-    backgroundColor: COLORS.primary,
-    padding: 10,
-    marginHorizontal: 60,
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+
 });

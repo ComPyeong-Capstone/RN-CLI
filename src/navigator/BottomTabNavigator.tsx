@@ -52,7 +52,7 @@ const BottomTabNavigator: React.FC = () => {
           },
           tabBarActiveTintColor:  COLORS.primary,
           tabBarInactiveTintColor: '#aaa',
-          tabBarStyle: { backgroundColor: COLORS.background, paddingBottom: 5 },
+          tabBarStyle: styles.tabBarStyle,
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderRadius: 30,
   },
+
 });
 
 export default BottomTabNavigator;
