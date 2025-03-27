@@ -12,6 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { styles } from '../../styles/shorts/imageSelectionStyles';
 import { scaleSize, scaleFont } from '../../styles/responsive';
 import { COLORS } from '../../styles/colors';
+import CustomButton from '../../styles/Button';
 
 const { width } = Dimensions.get('window');
 const IMAGE_WIDTH = width * 0.7;
@@ -77,22 +78,20 @@ const ImageSelectionScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.captionBox}>
         <Text style={styles.captionText}>생성된 자막</Text>
       </View>
-
-      {/* ✅ 버튼 */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.prevButton]}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.buttonText}>이전</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.nextButton]}
-          onPress={() => navigation.navigate('FinalVideoScreen')}
-        >
-          <Text style={styles.buttonText}>영상 생성</Text>
-        </TouchableOpacity>
-      </View>
+ <View style={styles.buttonContainer}>
+   <CustomButton
+     title="이전"
+     onPress={() => navigation.goBack()}
+     type="secondary"
+     style={{ marginHorizontal: 8 }}
+   />
+   <CustomButton
+     title="영상 생성"
+     onPress={() => navigation.navigate('FinalVideoScreen')}
+     type="primary"
+     style={{ marginHorizontal: 8 }}
+   />
+ </View>
     </SafeAreaView>
   );
 };

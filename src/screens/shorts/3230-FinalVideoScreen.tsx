@@ -12,6 +12,7 @@ import {ShortsStackParamList} from '../../navigator/ShortsNavigator';
 import styles from '../../styles/photo/FinalVideoStyles'; // 스타일 파일 분리
 import { COLORS } from '../../styles/colors'; // 🎨 색상 파일 가져오기
 import Swiper from 'react-native-swiper';
+import CustomButton from '../../styles/Button';
 
 // ✅ 네비게이션 타입 정의
 type FinalVideoScreenNavigationProp = StackNavigationProp<
@@ -123,19 +124,20 @@ const VIDEO_HEIGHT = VIDEO_WIDTH * (16 / 9); // 세로가 더 길게: 9:16 비�
         <Text style={styles.buttonText}>배경 음악</Text>
       </TouchableOpacity>
 
-      {/* 📌 하단 버튼 */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.prevButton]}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>이전</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.nextButton]}
-          onPress={() => navigation.navigate('ResultScreen')}>
-          <Text style={styles.buttonText}>영상 병합</Text>
-        </TouchableOpacity>
-      </View>
+ <View style={styles.buttonContainer}>
+   <CustomButton
+     title="이전"
+     onPress={() => navigation.goBack()}
+     type="secondary"
+     style={{ marginHorizontal: 8 }}
+   />
+   <CustomButton
+     title="영상 생성"
+     onPress={() => navigation.navigate('ResultScreen')}
+     type="primary"
+     style={{ marginHorizontal: 8 }}
+   />
+ </View>
     </SafeAreaView>
   );
 };

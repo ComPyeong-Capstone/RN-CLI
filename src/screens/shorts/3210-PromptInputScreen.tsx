@@ -5,6 +5,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {styles} from '../../styles/shorts/prompInputStyles'; // ✅ styles/shorts 폴더의 스타일 파일
 import {scaleSize, scaleFont} from '../../styles/responsive'; // ✅ 반응형 크기 조정 함수 가져오기
 import { COLORS } from '../../styles/colors'; // 🎨 색상 파일 가져오기
+import CustomButton from '../../styles/Button';
 
 // ✅ 네비게이션 타입 정의
 type RootStackParamList = {
@@ -51,20 +52,22 @@ const PromptInputScreen: React.FC<Props> = ({navigation}) => {
           value={prompt}
         />
       </View>
+      {/* ✅ 버튼 컨트롤 */}
+ <View style={styles.buttonContainer}>
+   <CustomButton
+     title="이전"
+     onPress={() => navigation.goBack()}
+     type="secondary"
+     style={{ marginHorizontal: 8 }}
+   />
+   <CustomButton
+     title="영상 생성"
+     onPress={() => navigation.navigate('ImageSelectionScreen')}
+     type="primary"
+     style={{ marginHorizontal: 8 }}
+   />
+ </View>
 
-      {/* 📌 버튼 추가 */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.prevButton]}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>이전</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.nextButton]}
-          onPress={() => navigation.navigate('ImageSelectionScreen')}>
-          <Text style={styles.buttonText}>이미지 생성</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };

@@ -1,4 +1,3 @@
-/*
 import { StyleSheet, Dimensions } from 'react-native';
 import { COLORS } from '../../styles/colors'; // 🎨 색상 파일 가져오기
 
@@ -9,70 +8,60 @@ const IMAGE_HEIGHT = IMAGE_WIDTH * (16 / 9);
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.background,
     alignItems: 'center',
-  },
-  progressContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  progressDotActive: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  progressDotInactive: {
-    fontSize: 16,
-    color: '#bbb',
-  },
-  progressLine: {
-    width: 20,
-    height: 2,
-    backgroundColor: '#bbb',
-  },
-  sliderWrapper: {
-    height: IMAGE_HEIGHT + 40,
     justifyContent: 'center',
   },
+
+  wrapper: {},
+
   slide: {
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
-    backgroundColor: '#ddd',
-    justifyContent: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
     alignItems: 'center',
-    borderRadius: 10,
-  },
-  imageText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  captionBox: {
-    marginTop: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-  },
-  captionText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: COLORS.imagebox,
+    marginHorizontal: (width - IMAGE_WIDTH) / 2,
     marginTop: 30,
   },
-  button: {
-    backgroundColor: '#007BFF',
-    padding: 12,
-    marginHorizontal: 10,
-    borderRadius: 8,
+
+  image: {
+    width: '100%',
+    height: '100%',
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+
+  addButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: COLORS.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  addButtonText: {
+    fontSize: 28,
+    color: '#00A6FB',
     fontWeight: 'bold',
   },
+
+  promptInput: {
+    width: width * 0.8,
+    height: 40,
+    borderColor: '#00A6FB',
+    borderWidth: 1.5,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginTop: 40,
+    fontSize: 16,
+    color: '#1F2C3D',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 80,
+    gap: 90,
+  },
 });
-*/

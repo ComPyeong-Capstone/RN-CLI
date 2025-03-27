@@ -7,7 +7,6 @@ import PromptInputScreen from '../screens/shorts/3210-PromptInputScreen';
 import ImageSelectionScreen from '../screens/shorts/3220-ImageSelectionScreen';
 import FinalVideoScreen from '../screens/shorts/3230-FinalVideoScreen';
 import MusicSelectionScreen from '../screens/shorts/3231-MusicSelectionScreen';
-import PostVideoScreen from '../screens/shorts/3250-PostVideoScreen';
 import ResultScreen from '../screens/shorts/3240-ResultScreen';
 
 // ✅ Stack Navigator 타입 정의
@@ -36,7 +35,6 @@ const ShortsNavigator: React.FC = () => {
         name="MusicSelectionScreen"
         component={MusicSelectionScreen}
       />
-      <Stack.Screen name="PostVideoScreen" component={PostVideoScreen} />
       <Stack.Screen name="ResultScreen" component={ResultScreen} />
     </Stack.Navigator>
   );
