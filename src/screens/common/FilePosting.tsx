@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
     useWindowDimensions,
 Platform,
 ActivityIndicator,
+Animated,
 } from 'react-native';
 import Video from 'react-native-video';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -25,21 +26,26 @@ import {BASE_URL} from '@env';
 import * as Progress from 'react-native-progress';
 
 interface Props {
-  navigation: StackNavigationProp<AppStackParamList, 'PostVideoScreen'>;
+  navigation: StackNavigationProp<AppStackParamList, 'FilePosting'>;
 }
 
 
-const PostVideoScreen: React.FC<Props> = ({navigation}) => {
+const FilePosting: React.FC<Props> = ({navigation}) => {
   const {width, height} = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const {user} = useUser();
     const [uploadProgress, setUploadProgress] = useState<number>(0); // 0~100%
     const [uploading, setUploading] = useState(false);
 const [videoLoading, setVideoLoading] = useState(false);
+const [titleError, setTitleError] = useState('');
+const [tagsError, setTagsError] = useState('');
 
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const [videoURI, setVideoURI] = useState<string | null>(null);
+  const shakeTitle = useRef(new Animated.Value(0)).current;
+  const shakeTags = useRef(new Animated.Value(0)).current;
+
   const handleTagInput = (text: string) => {
     const words = text.split(/[\s\n]+/); // 단어 단위 분할
 
@@ -66,6 +72,35 @@ useEffect(() => {
   };
   fetchToken();
 }, []);
+const startShake = (animatedValue: Animated.Value) => {
+  Animated.sequence([
+    Animated.timing(animatedValue, {
+      toValue: 10,
+      duration: 50,
+      useNativeDriver: true,
+    }),
+    Animated.timing(animatedValue, {
+      toValue: -10,
+      duration: 50,
+      useNativeDriver: true,
+    }),
+    Animated.timing(animatedValue, {
+      toValue: 6,
+      duration: 50,
+      useNativeDriver: true,
+    }),
+    Animated.timing(animatedValue, {
+      toValue: -6,
+      duration: 50,
+      useNativeDriver: true,
+    }),
+    Animated.timing(animatedValue, {
+      toValue: 0,
+      duration: 50,
+      useNativeDriver: true,
+    }),
+  ]).start();
+};
 
 const handlePickVideo = async () => {
   try {
@@ -117,7 +152,30 @@ const handlePickVideo = async () => {
     }
   };
 
+const handleUpload = () => {
+  let valid = true;
 
+if (!title.trim()) {
+  setTitleError('제목을 입력해주세요.');
+  startShake(shakeTitle); // 흔들기 실행
+  valid = false;
+}
+
+if (!tags.trim()) {
+  setTagsError('태그를 입력해주세요.');
+  startShake(shakeTags); // 흔들기 실행
+  valid = false;
+}
+
+  if (!valid) return;
+
+  setUploading(true);
+  uploadToMyServer(title, tags, videoURI, user?.token).finally(() =>
+    setUploading(false),
+  );
+};
+
+// ✅ 올바른 수정
 const uploadToMyServer = async (
   title: string,
   tags: string,
@@ -211,39 +269,45 @@ const uploadToMyServer = async (
     )}
 
    </TouchableOpacity>
-
+<Animated.View style={{ transform: [{ translateX: shakeTitle }] }}>
   <TextInput
-         style={[styles.input, {width: width * 0.9, marginTop: 0}]} // ✅ 빈 공간 제거
-         placeholder="제목"
-         placeholderTextColor="#999999"
-         value={title}
-         onChangeText={setTitle}
-       />
-    <TextInput
-      style={[styles.input, styles.inputMultiline, {width: width * 0.9}]}
-      placeholder="태그 입력  ex) #GPT, #AI"
-      placeholderTextColor="#999"
-      value={tags}
-      onChangeText={handleTagInput}
-      multiline
-    />
+    style={[styles.input, { width: width * 0.9 }]}
+    placeholder={titleError ? '제목을 입력해주세요.' : '제목'}
+    placeholderTextColor={titleError ? 'red' : '#999'}
+    value={title}
+    onChangeText={text => {
+      setTitle(text);
+      if (titleError) setTitleError('');
+    }}
+  />
+</Animated.View>
+
+<Animated.View style={{ transform: [{ translateX: shakeTags }] }}>
+  <TextInput
+    style={[styles.input, styles.inputMultiline, { width: width * 0.9 }]}
+    placeholder={tagsError ? '태그를 입력해주세요.' : '태그 입력 ex) #AI, #GPT'}
+    placeholderTextColor={tagsError ? 'red' : '#999'}
+    value={tags}
+    onChangeText={text => {
+      handleTagInput(text);
+      if (tagsError) setTagsError('');
+    }}
+    multiline
+  />
+</Animated.View>
 
 
         </View>
 
       <View style={[styles.buttonContainer, {width: width * 0.9, marginBottom: insets.bottom + 10}]}>
         <CommonButton title="YouTube 업로드" onPress={uploadToYouTube} type="secondary" style={{width: width * 0.4}} />
-        <CommonButton
-          title="AIVIDEO 업로드"
-          onPress={() => {
-            setUploading(true); // 시작
-            uploadToMyServer(title, tags, videoURI, user?.token).finally(() =>
-              setUploading(false) // 끝나면 숨기기
-            );
-          }}
-          type="primary"
-          style={{width: width * 0.4}}
-        />
+    <CommonButton
+      title="AIVIDEO 업로드"
+      onPress={handleUpload}
+      type="primary"
+      style={{width: width * 0.4}}
+    />
+
       </View>
 
       {uploading && (
@@ -266,4 +330,4 @@ const uploadToMyServer = async (
   );
 };
 
-export default PostVideoScreen;
+export default FilePosting;

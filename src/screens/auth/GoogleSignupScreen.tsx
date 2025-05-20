@@ -31,7 +31,6 @@ const handleSubmit = async () => {
     setUser({ ...response.user, token: response.accessToken });
 
     Alert.alert('가입 완료', `${response.user.userName}님 환영합니다!`);
-    navigation.replace('Main');
 
   } catch (error: any) {
     if (error?.response?.status === 409) {

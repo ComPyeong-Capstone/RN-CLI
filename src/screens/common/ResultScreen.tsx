@@ -15,11 +15,13 @@ import {scaleSize} from '../../styles/responsive';
 import {StackNavigationProp} from '@react-navigation/stack';
 import CameraRoll from '@react-native-camera-roll/camera-roll';
 import RNFS from 'react-native-fs';
+import {useUser} from '../../context/UserContext'; // 사용자 토큰용
+import {createPostWithUrl} from '../../api/postApi';
 
 // ▶️ Stack Param Type
 type ShortsStackParamList = {
   ResultScreen: {videos: string[]; subtitles: string[]; music?: string};
-  PostVideoScreen: {finalVideoUrl: string};
+  URLPosting: {finalVideoUrl: string};
   Main: undefined;
 };
 
@@ -31,6 +33,8 @@ type NavigationProps = StackNavigationProp<
 const ResultScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProps>();
   const route = useRoute();
+  const { user } = useUser(); // 🔥 필수: 유저 정보 가져오기
+
   const {videos} = route.params as {
     videos: string[];
     subtitles: string[];
@@ -114,17 +118,17 @@ const ResultScreen: React.FC = () => {
     }
   };
 
-  const handlePost = () => {
-    if (!finalVideoUrl) {
-      Alert.alert('에러', '게시할 영상이 없습니다.');
-      return;
-    }
 
-    console.log('🚀 포스팅으로 이동:', finalVideoUrl);
-    navigation.navigate('PostVideoScreen', {
-      finalVideoUrl,
-    });
-  };
+const handlePost = () => {
+  if (!finalVideoUrl) {
+    Alert.alert('에러', '게시할 영상이 없습니다.');
+    return;
+  }
+
+  console.log('🚀 포스팅 화면으로 이동:', finalVideoUrl);
+  navigation.navigate('URLPosting', { finalVideoUrl });
+};
+
 
   return (
     <View style={styles.container}>

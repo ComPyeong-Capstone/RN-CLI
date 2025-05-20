@@ -8,7 +8,7 @@ import ImageSelectionScreen from '../screens/shorts/32-ImageSelectionScreen';
 import FinalVideoScreen from '../screens/common/FinalVideoScreen';
 import MusicSelectionScreen from '../screens/common/MusicSelectionScreen';
 import ResultScreen from '../screens/common/ResultScreen';
-import PostVideoScreen from '../screens/common/PostVideoScreen';
+import URLPosting from '../screens/common/URLPosting';
 
 // ✅ Stack Param 타입 정의
 export type ShortsStackParamList = {
@@ -71,7 +71,7 @@ const ShortsNavigator: React.FC = () => {
         component={MusicSelectionScreen}
       />
       <Stack.Screen name="ResultScreen" component={ResultScreen} />
-      <Stack.Screen name="PostVideoScreen" component={PostVideoScreen} />
+      <Stack.Screen name="URLPosting" component={URLPosting} />
     </Stack.Navigator>
   );
 };

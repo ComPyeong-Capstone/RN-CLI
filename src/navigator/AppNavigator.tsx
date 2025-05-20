@@ -7,7 +7,8 @@ import BottomTabNavigator from './BottomTabNavigator';
 import ShortsNavigator from './ShortsNavigator';
 import PhotoNavigator from './PhotoNavigator';
 import ShortsPlayerScreen from '../screens/shortsPlayer/ShortsPlayerScreen';
-import PostVideoScreen from '../screens/common/PostVideoScreen';
+import URLPosting from '../screens/common/URLPosting';
+import FilePosting from '../screens/common/FilePosting';
 
 import {useUser} from '../context/UserContext';
 import {AppStackParamList} from './types';
@@ -36,11 +37,20 @@ const AppNavigator = () => {
               name="ShortsPlayerScreen"
               component={ShortsPlayerScreen}
             />
+            <Stack.Screen
+              name="URLPosting"
+              component={URLPosting}
+              initialParams={{
+                finalVideoUrl: null,
+                title: '',
+                tags: '',
+              }}
+            />
 
             {/* ✅ 초기 파라미터 설정 */}
             <Stack.Screen
-              name="PostVideoScreen"
-              component={PostVideoScreen}
+              name="FilePosting"
+              component={FilePosting}
               initialParams={{
                 finalVideoUrl: null,
                 title: '',

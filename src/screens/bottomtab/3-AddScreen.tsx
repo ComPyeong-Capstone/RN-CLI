@@ -23,7 +23,7 @@ type RootStackParamList = {
     screen: 'SelectDurationScreen';
     params: {mode: 'photo'};
   };
-  PostVideoScreen: undefined; // ✅ 단일 화면으로 정의
+  FilePosting: undefined; // ✅ 단일 화면으로 정의
 };
 
 type AddScreenModalProps = {
@@ -53,7 +53,7 @@ const AddScreenModal: React.FC<AddScreenModalProps> = ({visible, onClose}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
-  const handleNavigate = (type: 'shorts' | 'photo' | 'upload') => {
+  const handleNavigate = (type: 'shorts' | 'photo' | 'FilePosting') => {
     switch (type) {
       case 'shorts':
         navigation.navigate('ShortsStack', {
@@ -67,8 +67,12 @@ const AddScreenModal: React.FC<AddScreenModalProps> = ({visible, onClose}) => {
           params: {mode: 'photo'},
         });
         break;
-      case 'upload':
-        navigation.navigate('PostVideoScreen'); // ✅ 단일 화면으로 바로 이동
+      case 'FilePosting':
+navigation.navigate('FilePosting', {
+  finalVideoUrl: null,
+  title: '',
+  tags: '',
+});
         break;
     }
     onClose();
@@ -119,7 +123,7 @@ const AddScreenModal: React.FC<AddScreenModalProps> = ({visible, onClose}) => {
 
             <TouchableOpacity
               style={[styles.button, {height: scaleSize(60)}]}
-              onPress={() => handleNavigate('upload')}>
+              onPress={() => handleNavigate('FilePosting')}>
               <Text style={[styles.buttonText, {fontSize: scaleFont(18)}]}>
                 영상 업로드
               </Text>

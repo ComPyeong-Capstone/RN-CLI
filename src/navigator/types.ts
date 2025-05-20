@@ -22,8 +22,12 @@ export type AppStackParamList = {
     creatorUserId: number;
     showComments: boolean;
   };
-
-  PostVideoScreen: {
+ URLPosting: {
+    finalVideoUrl: string | null;
+    title: string;
+    tags: string;
+  };
+  FilePosting: {
     finalVideoUrl: string | null;
     title: string;
     tags: string;

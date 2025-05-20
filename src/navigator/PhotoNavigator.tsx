@@ -6,7 +6,7 @@ import SelectDurationScreen from '../screens/common/SelectDurationScreen';
 import PhotoPromptScreen from '../screens/photo/PhotoPromptScreen';
 import FinalVideoScreen from '../screens/common/FinalVideoScreen';
 import MusicSelectionScreen from '../screens/common/MusicSelectionScreen';
-import PostVideoScreen from '../screens/common/PostVideoScreen';
+import URLPosting from '../screens/common/URLPosting';
 
 // ✅ Stack Navigator 타입 정의
 export type PhotoStackParamList = {
@@ -53,7 +53,7 @@ const PhotoNavigator: React.FC = () => {
         component={MusicSelectionScreen}
       />
       <Stack.Screen name="ResultScreen" component={ResultScreen} />
-      <Stack.Screen name="PostVideoScreen" component={PostVideoScreen} />
+      <Stack.Screen name="URLPosting" component={URLPosting} />
     </Stack.Navigator>
   );
 };
